@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
+import LoginView from '@/views/LoginView.vue'
 import LandingView from '@/views/LandingView.vue'
 import { useAuthStore } from '@/stores/auth'
+import LocationView from '../views/LocationView.vue'
+import MapView from '@/views/MapView.vue'
+import TripView from '@/views/TripView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +18,21 @@ const router = createRouter({
       path: '/landing',
       name: 'landing',
       component: LandingView,
+    },
+    {
+      path: '/location',
+      name: 'location',
+      component: LocationView,
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: MapView,
+    },
+    {
+      path: '/trip',
+      name: 'trip',
+      component: TripView,
     },
   ],
 })
@@ -36,7 +54,6 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  // Check auth with server
   const isAuthenticated = await authStore.checkAuth()
   if (!isAuthenticated) {
     next({ name: 'login' })
